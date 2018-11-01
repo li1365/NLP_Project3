@@ -17,7 +17,7 @@ class model(nn.Module):
         self.hidden_dim = hidden_dim
         self.embeds = nn.Embedding(vocab_size, hidden_dim)
         self.encoder = nn.GRU(hidden_dim, 99, bidirectional=True)
-        self.loss = nn.CrossEntropyLoss()
+        self.loss = nn.BCELoss()
         self.out = nn.Linear(198, out_dim)
 
     def compute_Loss(self, pred_vec, gold_output):
