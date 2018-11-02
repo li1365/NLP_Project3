@@ -59,7 +59,7 @@ def encode(data, forward_dict):
 
 
 if __name__ == '__main__':
-	datasets = read_input("sort")
+	datasets = read_input("reverse")
 	forward_dict, backward_dict = build_indices(datasets[0])
 	train_inputs, train_outputs, test_inputs, test_outputs = list(map(lambda x: encode(x, forward_dict), datasets))
 	m = model(vocab_size = len(forward_dict), hidden_dim = 128)
