@@ -16,7 +16,7 @@ def read_input(task):
 	assert task in {"copy", "reverse", "sort"}
 	path = Path("data")
 	train_f = path / ("train.txt")
-	test_f = path / ("test.txt")
+	test_f = path / ("test_mirror.txt")
 	
 	with open(train_f, encoding='utf-8') as train_file:
 		train_inputs = [line.split() for line in train_file]
@@ -57,9 +57,8 @@ def build_indices(train_set):
 def encode(data, forward_dict):
 	return [list(map(lambda t: forward_dict.get(t,0), line)) for line in data]
 
-
 if __name__ == '__main__':
-	datasets = read_input("reverse")
+	datasets = read_input("sort")
 	forward_dict, backward_dict = build_indices(datasets[0])
 	train_inputs, train_outputs, test_inputs, test_outputs = list(map(lambda x: encode(x, forward_dict), datasets))
 	m = model(vocab_size = len(forward_dict), hidden_dim = 128)
@@ -67,7 +66,7 @@ if __name__ == '__main__':
 	minibatch_size = 100
 	num_minibatches = len(train_inputs) // minibatch_size 
 
-	for epoch in (range(5)):
+	for epoch in (range(20)):
 		# Training
 		print("Training")
 		# Put the model in evaluation mode
@@ -99,7 +98,7 @@ if __name__ == '__main__':
 
 		predictions = 0
 		correct = 0 # number of tokens predicted correctly
-		for input_seq, gold_seq in zip(train_inputs, train_outputs):
+		for input_seq, gold_seq in zip(test_inputs, test_outputs):
 			_, predicted_seq = m(input_seq)
 			# Hint: why is this true? why is this assumption needed (for now)?
 			assert len(predicted_seq) == len(gold_seq)

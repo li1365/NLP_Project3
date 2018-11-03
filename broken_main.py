@@ -64,7 +64,6 @@ def build_indices(train_set):
 			i += 1
 	return forward_dict, backward_dict
 
-
 def encode(data, forward_dict):
 	return [list(map(lambda t: forward_dict.get(t,0), line)) for line in data]
 
